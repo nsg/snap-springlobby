@@ -2,7 +2,7 @@ name: springlobby-nsg
 version: '0.255'
 summary: The lobby for SpringRTS
 description: |
-    The lobby for SpringRTS
+  The lobby for SpringRTS. For more info see https://github.com/nsg/snap-springlobby
 
 grade: stable
 confinement: strict
