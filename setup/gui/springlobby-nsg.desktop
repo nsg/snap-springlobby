@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=SpringLobby
+GenericName=Spring Lobby
+Comment=The lobby for SpringRTS
+Exec=springlobby-nsg
+Icon=${SNAP}/meta/gui/springlobby-nsg.png
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=Application;Game
