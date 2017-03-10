@@ -1,0 +1,54 @@
+name: springlobby-nsg
+version: '0.255'
+summary: The lobby for SpringRTS
+description: |
+    The lobby for SpringRTS
+
+grade: stable
+confinement: strict
+
+apps:
+  springlobby-nsg:
+    command: bin/launch
+    plugs:
+      - x11
+      - network
+      - opengl
+      - unity7
+      - pulseaudio
+
+parts:
+  springlobby:
+    plugin: cmake
+    source: http://springlobby.info/tarballs/springlobby-0.255.tar.bz2
+    after:
+      - desktop-gtk3
+    build-packages:
+      - build-essential
+      - libwxgtk3.0-dev
+      - libcurl4-openssl-dev
+      - libalure-dev
+      - libboost-thread-dev
+      - libboost-filesystem-dev
+      - libboost-system-dev
+      - libpng12-dev
+
+    stage-packages:
+      - libsdl2-2.0-0
+      - libglu1-mesa
+      - libpulse0
+
+      # The game starts w/o these
+      - libvorbisfile3
+      - libmpg123-0
+      - libdumb1
+      - libmodplug1
+      - libfluidsynth1
+
+  launch:
+    plugin: dump
+    source: bin
+    organize:
+      launch: bin/launch
+    stage-packages:
+      - yad

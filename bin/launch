@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "The game data will be downloaded/stored in $SNAP_USER_COMMON"
+export HOME=$SNAP_USER_COMMON
+
+yad --wrap --button=gtk-ok --width=400 --title=Info --on-top \
+  --text="The launcher gets a little confused inside the snap and shows an error message on first lunch, you can ignore it. It also looks like that the launcher sometimes fails to find downloaded engines, a restart will solve that."
+
+desktop-launch $SNAP/bin/springlobby
