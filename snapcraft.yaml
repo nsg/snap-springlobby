@@ -50,5 +50,3 @@ parts:
     source: bin
     organize:
       launch: bin/launch
-    stage-packages:
-      - yad
