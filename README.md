@@ -6,10 +6,6 @@ game.
 
 The lobby is used to download the actual game binaries, maps, mods and so on.
 
-## Known problems
-
-* After a connection to the server you are offered to download the latest engine, but it looks like that the server fails to find both `spring` and `libunitsync.so` even if the path is correct. A restart of the lobby will solve this. Not sure why.
-
 ## Tips
 
 * A easy way to download a mod or map to test the game, just select "Battlelist" and right click a game and select "Download map" and "Download game". You can now try out the game with a mod and map under Singleplayer.
