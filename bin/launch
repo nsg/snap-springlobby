@@ -3,4 +3,10 @@
 echo "The game data will be downloaded/stored in $SNAP_USER_COMMON"
 export HOME=$SNAP_USER_COMMON
 
+mkdir -p $SNAP_USER_COMMON/.spring
+mkdir -p $SNAP_USER_COMMON/.springlobby
+
+ln -sf $SNAP_USER_COMMON/.spring $SNAP_USER_COMMON/spring
+ln -sf $SNAP_USER_COMMON/.springlobby $SNAP_USER_COMMON/springlobby
+
 desktop-launch $SNAP/bin/springlobby
