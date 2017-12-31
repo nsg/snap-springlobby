@@ -1,7 +1,7 @@
 ---
 
 name: springlobby-nsg
-version: '0.256'
+version: '0.261'
 summary: SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 description: |
   SpringLobby is the most easiest and most popular to way to launch the Spring RTS game
@@ -25,9 +25,9 @@ parts:
   springlobby:
     plugin: cmake
     source: https://github.com/springlobby/springlobby.git
-    source-commit: 7499f060fabfae365af60962b85e3d89f1147d74
+    source-commit: a3ecf429bb1fc90c0a1679e7984702e0f0008a5a
     configflags:
-      - -DSPRINGLOBBY_REV=0.256
+      - -DSPRINGLOBBY_REV=0.261
     prepare: |
         set -ex
         cat > ../src/cmake/config.h <<EOF
@@ -35,7 +35,7 @@ parts:
         #ifndef SPRINGLOBBY_HEADERGUARD_CONFIG_H
         #define SPRINGLOBBY_HEADERGUARD_CONFIG_H
         #undef VERSION
-        #define VERSION "0.256"
+        #define VERSION "0.261"
         #endif
         EOF
     after:
