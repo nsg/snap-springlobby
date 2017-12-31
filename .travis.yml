@@ -11,7 +11,8 @@ before_install:
   - sudo lxc network create testbr0
   - sudo lxc network attach-profile testbr0 default eth0
 
-  - sudo apt-get install snapcraft
+  - sudo apt-get install snapd
+  - sudo snap install --classic snapcraft
 
 script:
   - snapcraft cleanbuild
