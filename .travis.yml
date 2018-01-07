@@ -9,8 +9,8 @@ before_install:
   - sudo apt-get install -t trusty-backports -y lxd
   - sudo lxd init --auto --storage-backend=dir || true
   - sudo usermod -a -G lxd travis;
-  - lxc launch ubuntu:16.04 u1
-  - sudo ! while lxc list -c4 | grep eth0; sleep 1; done
 
 script:
+  - lxc launch ubuntu:16.04 u1
+  - sudo ! while lxc list -c4 | grep eth0; sleep 1; done
   - lxc list
