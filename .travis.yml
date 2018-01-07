@@ -13,3 +13,13 @@ script:
   - sudo lxc launch ubuntu:16.04 u1
   - sleep 20
   - sudo lxc list
+  - sleep 20
+  - sudo lxc list
+  - sleep 20
+  - sudo lxc list
+  - sleep 20
+  - sudo lxc list
+  - sleep 20
+  - sudo lxc list
+  - sleep 20
+  - sudo lxc list
