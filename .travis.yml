@@ -7,7 +7,7 @@ before_install:
   - sudo apt update
   - sudo apt-cache madison lxd
   - sudo apt-get install -t trusty-backports -y lxd
-  - sudo lxd init --auto --storage-backend=dir || true
+  - sudo lxd init --auto
 
 script:
   - sudo lxc launch ubuntu:16.04 u1
