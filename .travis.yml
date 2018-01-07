@@ -8,9 +8,8 @@ before_install:
   - sudo apt-cache madison lxd
   - sudo apt-get install -t trusty-backports -y lxd
   - sudo lxd init --auto --storage-backend=dir || true
-  - sudo usermod -a -G lxd travis;
 
 script:
-  - lxc launch ubuntu:16.04 u1
-  - while ! lxc list -c4 | grep eth0; do sleep 1; done
-  - lxc list
+  - sudo lxc launch ubuntu:16.04 u1
+  - while ! sudo lxc list -c4 | grep eth0; do sleep 1; done
+  - sudo lxc list
