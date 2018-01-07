@@ -8,6 +8,7 @@ before_install:
   - sudo apt-cache madison lxd
   - sudo apt-get install -t trusty-backports -y lxd
   - sudo lxd init --auto
+  - sudo dpkg-reconfigure -p medium lxd
 
 script:
   - sudo lxc launch ubuntu:16.04 u1
