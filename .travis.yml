@@ -9,18 +9,9 @@ before_install:
   - sudo apt-get install -t trusty-backports -y lxd
   - sudo lxd init --auto
   - sudo dpkg-reconfigure -p medium lxd
+  - sudo apt install -y snapd
 
 script:
   - sudo lxc launch ubuntu:16.04 u1
-  - sleep 20
-  - sudo lxc list
-  - sleep 20
-  - sudo lxc list
-  - sleep 20
-  - sudo lxc list
-  - sleep 20
-  - sudo lxc list
-  - sleep 20
-  - sudo lxc list
-  - sleep 20
-  - sudo lxc list
+  - sudo snap list
+  - snap list
