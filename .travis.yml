@@ -11,5 +11,5 @@ before_install:
 
 script:
   - sudo lxc launch ubuntu:16.04 u1
-  - while ! sudo lxc list -c4 | grep eth0; do sleep 1; done
+  - sleep 20
   - sudo lxc list
