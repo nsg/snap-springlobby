@@ -8,4 +8,4 @@ before_install:
   - sudo snap install snapcraft --classic
 
 script:
-  - snap list
+  - snapcraft
