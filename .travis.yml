@@ -5,6 +5,7 @@ dist: trusty
 
 before_install:
   - sudo apt update
+  - sudo apt-cache madison lxd
   - sudo apt-get install -y lxd
   - sudo lxd init --auto --storage-backend=dir || true
   - sudo lxc list
