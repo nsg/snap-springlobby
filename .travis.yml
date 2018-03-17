@@ -4,15 +4,30 @@ sudo: required
 dist: trusty
 
 before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
-  - sudo apt-get -qq update
-  - sudo apt-get install -y lxd
-  - sudo lxd init --auto --storage-backend=dir || true
-  - sudo lxc network create testbr0
-  - sudo lxc network attach-profile testbr0 default eth0
 
-  - sudo apt-get install snapd
-  - sudo snap install --classic snapcraft
+  # Setup install for snapcraft cleanbuild
+  # Because the ancient Ubuntu version (from the beginning of
+  # 2014) we have to do a few hacks to get things working.
+
+  # Update the repositories and install snap, the new package
+  # format that contains newer software that works.
+  - sudo apt-get -qq update
+  - sudo apt-get -y install snapd
+
+  # Install lxd and fix PATH
+  - sudo snap install lxd
+  - export PATH=$PATH:/snap/bin
+
+  # Wait for the lxd install to finalize before moving on
+  - bash -c 'while [ ! -S /var/snap/lxd/common/lxd/unix.socket ]; do echo "Waiting for LXD socket..."; sleep 1; done;'
+
+  # Configure LXD
+  - sudo lxd init --auto
+  - sudo lxc network create lxdbr0
+  - sudo lxc network attach-profile lxdbr0 default eth0
+
+  # Finally, install snapcraft
+  - sudo snap install snapcraft --classic
 
 script:
-  - snapcraft cleanbuild
+  - sudo snapcraft cleanbuild
