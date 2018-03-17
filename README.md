@@ -6,7 +6,7 @@
 after the classic [Total Annihilation](https://en.wikipedia.org/wiki/Total_Annihilation)
 game.
 
-The lobby is used to download the actual game binaries, maps, mods and so on.
+The snap contains the [springlobby](http://springlobby.info) client. It is used to play multi and single player games, download the actual game binaries, maps, mods and so on.
 
 ## Tips
 
