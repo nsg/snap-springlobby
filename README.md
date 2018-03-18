@@ -15,7 +15,7 @@ The snap contains the [springlobby](http://springlobby.info) client. It is used 
 ## Is there a new version?
 
 Open an [issue](https://github.com/nsg/snap-springlobby/issues) or submit a
-[Pull Request](Pull Request).
+[Pull Request](https://github.com/nsg/snap-springlobby/pulls).
 
 ### Checklist to update the build:
 
