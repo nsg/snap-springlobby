@@ -39,7 +39,7 @@ parts:
         #endif
         EOF
     after:
-      - desktop-gtk3
+      - desktop-gtk2
     build-packages:
       - build-essential
       - libwxgtk3.0-dev
