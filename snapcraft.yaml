@@ -22,6 +22,11 @@ apps:
       - pulseaudio
 
 parts:
+  desktop-gtk2:
+    stage:
+      - -usr/share/doc/libavahi-common-data/changelog.Debian.gz
+      - -usr/lib/x86_64-linux-gnu/libavahi-client.so.3.2.9
+      - -usr/lib/x86_64-linux-gnu/libavahi-common.so.3.5.3
   springlobby:
     plugin: cmake
     source: https://github.com/springlobby/springlobby.git
