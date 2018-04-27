@@ -19,7 +19,6 @@ Open an [issue](https://github.com/nsg/snap-springlobby/issues) or submit a
 
 ### Checklist to update the build:
 
-- Update `version`, `SPRINGLOBBY_REV` and the `VERSION` to the new release.
-- Update `source-tag` to the release tag.
+- Update `version`
 - Make a test build with `snapcraft cleanbuild`
 - Submit a PR
