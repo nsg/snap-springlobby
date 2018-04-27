@@ -18,7 +18,9 @@ apps:
       - x11
       - network
       - opengl
-      #      - unity7
+      - unity7
+      - desktop
+      - wayland
       - pulseaudio
 
 parts:
