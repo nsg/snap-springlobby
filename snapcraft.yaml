@@ -18,16 +18,16 @@ apps:
       - x11
       - network
       - opengl
-      - unity7
+      #      - unity7
       - pulseaudio
 
 parts:
   springlobby:
     plugin: cmake
     source: https://github.com/springlobby/springlobby.git
-    source-commit: 36fd2952b588bfbdd1827d9301eea73223c904d6
+    source-tag: $SNAPCRAFT_PROJECT_VERSION
     configflags:
-      - -DSPRINGLOBBY_REV=0.264
+      - -DSPRINGLOBBY_REV=$SNAPCRAFT_PROJECT_VERSION
     override-build: |
         set -ex
         cat > ../src/cmake/config.h <<EOF
@@ -35,7 +35,7 @@ parts:
         #ifndef SPRINGLOBBY_HEADERGUARD_CONFIG_H
         #define SPRINGLOBBY_HEADERGUARD_CONFIG_H
         #undef VERSION
-        #define VERSION "0.264"
+        #define VERSION "$SNAPCRAFT_PROJECT_VERSION"
         #endif
         EOF
         snapcraftctl build
