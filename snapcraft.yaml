@@ -12,7 +12,7 @@ grade: stable
 confinement: strict
 
 slots:
-  lobbydata:
+  content:
     content: writable-data
     write:
       - $SNAP_USER_COMMON
