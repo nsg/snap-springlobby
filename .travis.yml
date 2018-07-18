@@ -23,8 +23,6 @@ before_install:
 
   # Configure LXD
   - sudo lxd init --auto
-  - sudo lxc network create lxdbr0
-  - sudo lxc network attach-profile lxdbr0 default eth0
 
   # Finally, install snapcraft
   - sudo snap install snapcraft --classic
