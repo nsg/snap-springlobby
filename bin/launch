@@ -14,7 +14,7 @@ ln -sf $SNAP_USER_COMMON/.springlobby $SNAP_USER_COMMON/springlobby
 # I'm not sure why, but for some reason the lobby fails to detect
 # these things when we download the engine. A restart solves it
 # but that's annoying so these lines are here to solve that.
-if [ -s $SNAP_USER_COMMON/.springlobby/springlobby.conf ]; then
+if [ ! -s $SNAP_USER_COMMON/.springlobby/springlobby.conf ]; then
 echo "Download ZK and BA so you have a few games."
 pr-downloader zk:stable
 pr-downloader ba:stable
