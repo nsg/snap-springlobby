@@ -22,6 +22,10 @@ apps:
       - desktop
       - wayland
       - pulseaudio
+  pr-downloader:
+    command: pr-downloader
+    plugs:
+      - network
 
 parts:
   desktop-gtk2:
@@ -75,6 +79,19 @@ parts:
       - libdumb1
       - libmodplug1
       - libfluidsynth1
+
+  pr-downloader:
+    plugin: cmake
+    source: https://github.com/spring/pr-downloader.git
+    build-packages:
+      - libcurl4-openssl-dev
+      - libjsoncpp-dev
+      - libboost-thread1.58-dev
+      - libboost-system1.58-dev
+      - libboost-filesystem1.58-dev
+      - liblua5.1-0-dev
+      - libzip-dev
+      - zlib1g-dev
 
   launch:
     plugin: dump
