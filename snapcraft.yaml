@@ -11,12 +11,6 @@ description: |
 grade: stable
 confinement: strict
 
-slots:
-  content:
-    content: writable-data
-    write:
-      - $SNAP_USER_COMMON
-
 apps:
   springlobby-nsg:
     command: bin/launch
