@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ENGINE_VERSION="104.0"
+
 echo "The game data will be downloaded/stored in $SNAP_USER_COMMON"
 export HOME=$SNAP_USER_COMMON
 
@@ -12,18 +14,29 @@ ln -sf $SNAP_USER_COMMON/.springlobby $SNAP_USER_COMMON/springlobby
 # I'm not sure why, but for some reason the lobby fails to detect
 # these things when we download the engine. A restart solves it
 # but that's annoying so these lines are here to solve that.
-test -s $SNAP_USER_COMMON/.springlobby/springlobby.conf || \
+if [ -s $SNAP_USER_COMMON/.springlobby/springlobby.conf ]; then
+echo "Download ZK and BA so you have a few games."
+pr-downloader zk:stable
+pr-downloader ba:stable
+
+echo "Download a popular classic map"
+pr-downloader DeltaSiegeDry
+
+echo "Download the engine"
+pr-downloader --download-engine $ENGINE_VERSION
+
 cat > $SNAP_USER_COMMON/.springlobby/springlobby.conf <<EOF
 [Spring]
 DownloadDir=$SNAP_USER_COMMON/.spring
-CurrentIndex=103.0
+CurrentIndex=$ENGINE_VERSION
 [Spring/Paths]
-[Spring/Paths/103.0]
-SpringBinPath=$SNAP_USER_COMMON/.spring/engine/103.0/spring
-UnitSyncPath=$SNAP_USER_COMMON/.spring/engine/103.0/libunitsync.so
-SpringBundlePath=$SNAP_USER_COMMON/.spring/engine/103.0
+[Spring/Paths/$ENGINE_VERSION]
+SpringBinPath=$SNAP_USER_COMMON/.spring/engine/$ENGINE_VERSION/spring
+UnitSyncPath=$SNAP_USER_COMMON/.spring/engine/$ENGINE_VERSION/libunitsync.so
+SpringBundlePath=$SNAP_USER_COMMON/.spring/engine/$ENGINE_VERSION
 [General]
 firstrun=1
 EOF
+fi
 
 exec desktop-launch $SNAP/bin/springlobby
