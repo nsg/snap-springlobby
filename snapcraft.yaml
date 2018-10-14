@@ -40,9 +40,8 @@ parts:
   springlobby:
     plugin: cmake
     source: https://github.com/springlobby/springlobby.git
-    source-tag: $SNAPCRAFT_PROJECT_VERSION
     configflags:
-      - -DSPRINGLOBBY_REV=$SNAPCRAFT_PROJECT_VERSION
+      - -DSPRINGLOBBY_REV=$(git describe --tags --abbrev=0)
     override-pull: |
         snapcraftctl pull
         git checkout "$(git describe --tags --abbrev=0)"
