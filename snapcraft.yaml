@@ -45,8 +45,8 @@ parts:
       - -DSPRINGLOBBY_REV=$SNAPCRAFT_PROJECT_VERSION
     override-pull: |
         snapcraftctl pull
-        git checkout "$(git describe --tags)"
-        snapcraftctl set-version "$(git describe --tags)"
+        git checkout "$(git describe --tags --abbrev=0)"
+        snapcraftctl set-version "$(git describe --tags --abbrev=0)"
     override-build: |
         set -ex
         cat > ../src/cmake/config.h <<EOF
