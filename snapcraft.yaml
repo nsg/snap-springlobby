@@ -54,7 +54,7 @@ parts:
         #ifndef SPRINGLOBBY_HEADERGUARD_CONFIG_H
         #define SPRINGLOBBY_HEADERGUARD_CONFIG_H
         #undef VERSION
-        #define VERSION "$SNAPCRAFT_PROJECT_VERSION"
+        #define VERSION "$(git describe --tags --abbrev=0)"
         #endif
         EOF
         snapcraftctl build
