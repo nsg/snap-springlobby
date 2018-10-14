@@ -45,6 +45,7 @@ parts:
       - -DSPRINGLOBBY_REV=$SNAPCRAFT_PROJECT_VERSION
     override-pull: |
         snapcraftctl pull
+        git checkout "$(git describe --tags)"
         snapcraftctl set-version "$(git describe --tags)"
     override-build: |
         set -ex
