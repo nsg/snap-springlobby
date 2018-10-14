@@ -1,7 +1,6 @@
 ---
 
 name: springlobby-nsg
-version: '0.267'
 summary: SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 description: |
   SpringLobby is the most easiest and most popular to way to launch the Spring RTS game
@@ -43,6 +42,9 @@ parts:
     source-tag: $SNAPCRAFT_PROJECT_VERSION
     configflags:
       - -DSPRINGLOBBY_REV=$SNAPCRAFT_PROJECT_VERSION
+    override-pull: |
+        snapcraftctl pull
+        snapcraftctl set-version "$(git describe --tags)"
     override-build: |
         set -ex
         cat > ../src/cmake/config.h <<EOF
