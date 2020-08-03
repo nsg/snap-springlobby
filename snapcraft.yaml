@@ -35,7 +35,8 @@ plugs:
 
 apps:
   springlobby-nsg:
-    command-chain: bin/command-chain
+    command-chain:
+      - bin/command-chain
     command: desktop-launch $SNAP/bin/springlobby
     environment:
       DISABLE_WAYLAND: 1
