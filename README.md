@@ -1,6 +1,6 @@
 # snap-springlobby
 
-[![Snap Status](https://build.snapcraft.io/badge/nsg/snap-springlobby.svg)](https://build.snapcraft.io/user/nsg/snap-springlobby) [![Build Status](https://travis-ci.org/nsg/snap-springlobby.svg?branch=master)](https://travis-ci.org/nsg/snap-springlobby)
+[![Snap Status](https://build.snapcraft.io/badge/nsg/snap-springlobby.svg)](https://build.snapcraft.io/user/nsg/snap-springlobby)
 
 [Spring Engine](https://springrts.com) is a wonderful RTS game, designed
 after the classic [Total Annihilation](https://en.wikipedia.org/wiki/Total_Annihilation)
