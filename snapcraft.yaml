@@ -15,9 +15,30 @@ base: core20
 architectures:
   - build-on: amd64
 
+plugs:
+  gtk-2-engines:
+    interface: content
+    target: $SNAP/lib/gtk-2.0
+    default-provider: gtk2-common-themes
+  gtk-2-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes
+
 apps:
   springlobby-nsg:
-    command: bin/launch
+    command-chain: bin/command-chain
+    command: desktop-launch $SNAP/bin/springlobby
+    environment:
+      DISABLE_WAYLAND: 1
     plugs:
       - x11
       - network
@@ -107,4 +128,4 @@ parts:
     plugin: dump
     source: bin
     organize:
-      launch: bin/launch
+      command-chain: bin/command-chain

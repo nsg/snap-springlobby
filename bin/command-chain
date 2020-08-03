@@ -38,5 +38,3 @@ SpringBundlePath=$SNAP_USER_COMMON/.spring/engine/$ENGINE_VERSION
 firstrun=1
 EOF
 fi
-
-exec desktop-launch $SNAP/bin/springlobby
