@@ -10,6 +10,7 @@ description: |
 
 grade: stable
 confinement: strict
+base: core20
 
 architectures:
   - build-on: amd64
@@ -27,12 +28,13 @@ apps:
       - wayland
       - pulseaudio
   pr-downloader:
-    command: pr-downloader
+    command: usr/local/bin/pr-downloader
     plugs:
       - network
 
 parts:
   desktop-gtk2:
+    plugin: nil
     stage:
       - -usr/share/doc/libavahi-common-data/changelog.Debian.gz
       - -usr/lib/x86_64-linux-gnu/libavahi-client.so.3.2.9
@@ -40,7 +42,7 @@ parts:
   springlobby:
     plugin: cmake
     source: https://github.com/springlobby/springlobby.git
-    configflags:
+    cmake-parameters:
       - -DSPRINGLOBBY_REV=$(git describe --tags --abbrev=0)
     override-pull: |
         snapcraftctl pull
@@ -61,23 +63,23 @@ parts:
       - desktop-gtk2
     build-packages:
       - build-essential
-      - libwxgtk3.0-dev
+      - libwxgtk3.0-gtk3-dev
       - libcurl4-openssl-dev
       - libalure-dev
-      - libboost-thread-dev
-      - libboost-filesystem-dev
-      - libboost-system-dev
-      - libpng12-dev
+      - libboost-thread1.71-dev
+      - libboost-filesystem1.71-dev
+      - libboost-system1.71-dev
+      - libpng-dev
       - libssl-dev
 
     stage-packages:
-      - libwxgtk3.0-0v5
+      - libwxgtk3.0-gtk3-0v5
       - libalure1
-      - libboost-thread1.58.0
-      - libboost-filesystem1.58.0
-      - libboost-system1.58.0
-      - libpng12-0
-      - libssl1.0.0
+      - libboost-thread1.71.0
+      - libboost-filesystem1.71.0
+      - libboost-system1.71.0
+      - libpng16-16
+      - libssl1.1
       - libsdl2-2.0-0
       - libglu1-mesa
       - libpulse0
@@ -85,7 +87,7 @@ parts:
       - libmpg123-0
       - libdumb1
       - libmodplug1
-      - libfluidsynth1
+      - libfluidsynth2
 
   pr-downloader:
     plugin: cmake
@@ -93,12 +95,14 @@ parts:
     build-packages:
       - libcurl4-openssl-dev
       - libjsoncpp-dev
-      - libboost-thread1.58-dev
-      - libboost-system1.58-dev
-      - libboost-filesystem1.58-dev
+      - libboost-thread1.71-dev
+      - libboost-system1.71-dev
+      - libboost-filesystem1.71-dev
       - liblua5.1-0-dev
       - libzip-dev
       - zlib1g-dev
+    stage-packages:
+      - libcurl4
 
   launch:
     plugin: dump
