@@ -1,5 +1,7 @@
 # snap-springlobby
 
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/springlobby-nsg)
+
 [![Snap Status](https://build.snapcraft.io/badge/nsg/snap-springlobby.svg)](https://build.snapcraft.io/user/nsg/snap-springlobby)
 
 [Spring Engine](https://springrts.com) is a game engine for RTS styles games, designed
