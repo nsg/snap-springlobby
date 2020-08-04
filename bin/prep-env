@@ -1,9 +1,5 @@
 #!/bin/bash
-
-ENGINE_VERSION="104.0"
-
-echo "The game data will be downloaded/stored in $SNAP_USER_COMMON"
-export HOME=$SNAP_USER_COMMON
+set -eu -o pipefail
 
 mkdir -p $SNAP_USER_COMMON/.spring
 mkdir -p $SNAP_USER_COMMON/.springlobby
@@ -11,20 +7,17 @@ mkdir -p $SNAP_USER_COMMON/.springlobby
 ln -sf $SNAP_USER_COMMON/.spring $SNAP_USER_COMMON/spring
 ln -sf $SNAP_USER_COMMON/.springlobby $SNAP_USER_COMMON/springlobby
 
+if [ ! -s $SNAP_USER_COMMON/.spring/REMOVE_ME_TO_REINSTALL_BUNDLED_ASSETS ]; then
+    echo "The Engine, Games and Maps will be stored at $SNAP_USER_COMMON/spring"
+    cp -r $SNAP/payload/* $SNAP_USER_COMMON/.spring/
+    touch $SNAP_USER_COMMON/.spring/REMOVE_ME_TO_REINSTALL_BUNDLED_ASSETS
+fi
+
 if [ ! -s $SNAP_USER_COMMON/.springlobby/springlobby.conf ]; then
-echo "Download ZK and BA so you have a few games."
-pr-downloader zk:stable
-pr-downloader ba:stable
-
-echo "Download a popular classic map"
-pr-downloader DeltaSiegeDry
-
-echo "Download the engine"
-pr-downloader --download-engine $ENGINE_VERSION
-
 # I'm not sure why, but for some reason the lobby fails to detect
 # these things when we download the engine. A restart solves it
 # but that's annoying so these lines are here to solve that.
+ENGINE_VERSION=104.0
 cat > $SNAP_USER_COMMON/.springlobby/springlobby.conf <<EOF
 [Spring]
 DownloadDir=$SNAP_USER_COMMON/.spring
@@ -38,3 +31,5 @@ SpringBundlePath=$SNAP_USER_COMMON/.spring/engine/$ENGINE_VERSION
 firstrun=1
 EOF
 fi
+
+exec "$@"

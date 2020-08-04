@@ -1,7 +1,7 @@
 ---
 
 name: springlobby-nsg
-adopt-info: springlobby
+adopt-info: detect-version
 summary: SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 description: |
   SpringLobby is the most easiest and most popular to way to launch the Spring RTS game
@@ -10,36 +10,26 @@ description: |
 
 grade: stable
 confinement: strict
-base: core20
+base: core18
+
+assumes:
+  - command-chain
 
 architectures:
   - build-on: amd64
 
-plugs:
-  gtk-2-engines:
-    interface: content
-    target: $SNAP/lib/gtk-2.0
-    default-provider: gtk2-common-themes
-  gtk-2-themes:
-    interface: content
-    target: $SNAP/data-dir/themes
-    default-provider: gtk-common-themes
-  icon-themes:
-    interface: content
-    target: $SNAP/data-dir/icons
-    default-provider: gtk-common-themes
-  sound-themes:
-    interface: content
-    target: $SNAP/data-dir/sounds
-    default-provider: gtk-common-themes
-
 apps:
   springlobby-nsg:
+    adapter: full
     command-chain:
-      - bin/command-chain
-    command: desktop-launch $SNAP/bin/springlobby
+      - bin/prep-env
+      - bin/desktop-launch
+    command: springlobby
+    common-id: com.springrts.SpringLobby
     environment:
       DISABLE_WAYLAND: 1
+      HOME: $SNAP_USER_COMMON
+      PATH: $PATH:$SNAP/usr/local/bin
     plugs:
       - x11
       - network
@@ -49,26 +39,26 @@ apps:
       - wayland
       - pulseaudio
   pr-downloader:
-    command: usr/local/bin/pr-downloader
+    command: pr-downloader
+    environment:
+      HOME: $SNAP_USER_COMMON
     plugs:
       - network
 
 parts:
-  desktop-gtk2:
+  detect-version:
     plugin: nil
-    stage:
-      - -usr/share/doc/libavahi-common-data/changelog.Debian.gz
-      - -usr/lib/x86_64-linux-gnu/libavahi-client.so.3.2.9
-      - -usr/lib/x86_64-linux-gnu/libavahi-common.so.3.5.3
+    override-build: |
+      apt -y install jq curl
+      VERSION=$(curl --silent "https://api.github.com/repos/springlobby/springlobby/tags" | jq -r .[].name | grep -E "^0." | sort -rn | head -1)
+      snapcraftctl set-version $VERSION
+
   springlobby:
     plugin: cmake
     source: https://github.com/springlobby/springlobby.git
-    cmake-parameters:
-      - -DSPRINGLOBBY_REV=$(git describe --tags --abbrev=0)
-    override-pull: |
-        snapcraftctl pull
-        git checkout "$(git describe --tags --abbrev=0)"
-        snapcraftctl set-version "$(git describe --tags --abbrev=0)"
+    source-tag: $SNAPCRAFT_PROJECT_VERSION
+    configflags:
+      - -DSPRINGLOBBY_REV=$SNAPCRAFT_PROJECT_VERSION
     override-build: |
         set -ex
         cat > ../src/cmake/config.h <<EOF
@@ -76,31 +66,33 @@ parts:
         #ifndef SPRINGLOBBY_HEADERGUARD_CONFIG_H
         #define SPRINGLOBBY_HEADERGUARD_CONFIG_H
         #undef VERSION
-        #define VERSION "$(git describe --tags --abbrev=0)"
+        #define VERSION "$SNAPCRAFT_PROJECT_VERSION"
         #endif
         EOF
+        update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 100
+        update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 100
         snapcraftctl build
-    after:
-      - desktop-gtk2
     build-packages:
       - build-essential
-      - libwxgtk3.0-gtk3-dev
+      - g++-8
+      - gcc-8
+      - libwxgtk3.0-dev
       - libcurl4-openssl-dev
       - libalure-dev
-      - libboost-thread1.71-dev
-      - libboost-filesystem1.71-dev
-      - libboost-system1.71-dev
+      - libboost-thread1.62-dev
+      - libboost-filesystem1.62-dev
+      - libboost-system1.62-dev
       - libpng-dev
       - libssl-dev
 
     stage-packages:
-      - libwxgtk3.0-gtk3-0v5
+      - libwxgtk3.0-0v5
       - libalure1
-      - libboost-thread1.71.0
-      - libboost-filesystem1.71.0
-      - libboost-system1.71.0
+      - libboost-thread1.62.0
+      - libboost-filesystem1.62.0
+      - libboost-system1.62.0
       - libpng16-16
-      - libssl1.1
+      - libssl1.0.0
       - libsdl2-2.0-0
       - libglu1-mesa
       - libpulse0
@@ -108,7 +100,23 @@ parts:
       - libmpg123-0
       - libdumb1
       - libmodplug1
-      - libfluidsynth2
+      - libfluidsynth1
+      - binutils
+      - libasn1-8-heimdal
+      - libcurl4
+      - libgssapi3-heimdal
+      - libhcrypto4-heimdal
+      - libheimbase1-heimdal
+      - libheimntlm0-heimdal
+      - libhx509-5-heimdal
+      - libkrb5-26-heimdal
+      - libldap-2.4-2
+      - libnghttp2-14
+      - libpsl5
+      - libroken18-heimdal
+      - librtmp1
+      - libsasl2-2
+      - libwind0-heimdal
 
   pr-downloader:
     plugin: cmake
@@ -116,12 +124,22 @@ parts:
     build-packages:
       - libcurl4-openssl-dev
       - libjsoncpp-dev
-      - libboost-thread1.71-dev
-      - libboost-system1.71-dev
-      - libboost-filesystem1.71-dev
+      - libboost-thread1.62-dev
+      - libboost-system1.62-dev
+      - libboost-filesystem1.62-dev
       - liblua5.1-0-dev
       - libzip-dev
       - zlib1g-dev
+    override-build: |
+      snapcraftctl build
+
+      # Download the map DeltaSiegeDry, the game Zero-K and the latest stable engine
+      mkdir -p $SNAPCRAFT_PART_INSTALL/payload/
+      cd $SNAPCRAFT_PART_INSTALL/bin/
+      ./pr-downloader --filesystem-writepath $SNAPCRAFT_PART_INSTALL/payload/ DeltaSiegeDry
+      ./pr-downloader --filesystem-writepath $SNAPCRAFT_PART_INSTALL/payload/ zk:stable
+      ./pr-downloader --filesystem-writepath $SNAPCRAFT_PART_INSTALL/payload/ --download-engine 104.0
+
     stage-packages:
       - libcurl4
 
@@ -129,4 +147,31 @@ parts:
     plugin: dump
     source: bin
     organize:
-      command-chain: bin/command-chain
+      prep-env: bin/prep-env
+
+  # From https://github.com/ubuntu/snapcraft-desktop-helpers/blob/master/snapcraft.yaml
+  # (copy-paste, updated source)
+  desktop-gtk2:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-subdir: gtk
+    plugin: make
+    make-parameters: ["FLAVOR=gtk2"]
+    build-packages:
+      - libgtk2.0-dev
+    stage-packages:
+      - libxkbcommon0  # XKB_CONFIG_ROOT
+      - ttf-ubuntu-font-family
+      - dmz-cursor-theme
+      - light-themes
+      - adwaita-icon-theme
+      - gnome-themes-standard
+      - shared-mime-info
+      - libgtk2.0-0
+      - libgdk-pixbuf2.0-0
+      - libglib2.0-bin
+      - libgtk2.0-bin
+      - unity-gtk2-module
+      - libappindicator1
+      - locales-all
+      - ibus-gtk
+      - libibus-1.0-5
