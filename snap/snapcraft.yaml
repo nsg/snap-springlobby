@@ -4,9 +4,41 @@ name: springlobby-nsg
 adopt-info: detect-version
 summary: SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 description: |
-  SpringLobby is the most easiest and most popular to way to launch the Spring RTS game
-  engine. This snap is based on the upstream lobby but a few teaks has been added for
-  a better snappy experience. For more info see https://github.com/nsg/snap-springlobby
+  Spring Engine is a game engine for RTS styles games, designed after the now classic
+  game Total Annihilation.
+
+  The snap contains:
+
+  * SpringLobby
+  * The tool pr-downloader that you can use to download engines, games, maps and so on
+  * The latest engine, the game Zero-K and a map is included out of the box to make it
+    playable.
+
+  The lobby can be used to easily launch single or multiplayer games. It has also a
+  built in utility to download games, maps and other tings from users. If you prefer
+  to use pr-downloader, the command is "springlobby-nsg.pr-downloader". For example,
+  to download the latest release of BA type "springlobby-nsg.pr-downloader ba:stable"
+  (Balanced Annihilation is a popular game that is similar to the original Total
+  Annihilation).
+
+  **install**
+
+  The package is named springlobby-nsg. The default channel "stable" contains verified
+  builds. The "edge" channel are automatically built and are untested, this channel
+  should always contain the latest release.
+
+  # install stable release (recommended)
+  snap install springlobby-nsg
+
+  # test the edge release
+  snap install --edge springlobby-nsg # new install
+  snap refresh --edge springlobby-nsg # switch from stable to edge
+
+  **About**
+
+  This is an unofficial package of SpringLobby. The lobby in the Ubuntu repositories was
+  so old so it was not possible to connect to the official server for online play. I
+  created this snap back in early 2017 for my own, but published it for everybody to use.
 
 grade: stable
 confinement: strict
